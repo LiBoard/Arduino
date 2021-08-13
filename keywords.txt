@@ -1,0 +1,14 @@
+# Classes
+LiBoard	KEYWORD1
+
+# Functions
+getData	KEYWORD2
+getIndex	KEYWORD2
+getBinaryBoard	KEYWORD2
+getSquareOccupancy	KEYWORD2
+
+# Constants
+SER_PIN	LITERAL1
+CLK_PIN	LITERAL1
+INPUT_PINS	LITERAL1
+values	LITERAL1
