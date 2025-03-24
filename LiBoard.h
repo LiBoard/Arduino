@@ -21,10 +21,10 @@
 class LiBoard {
 public:
 	LiBoard();
-	LiBoard(const unsigned char _CLK_PIN, const unsigned char _SER_PIN, const unsigned char _INPUT_PINS[8]);
+	LiBoard(const unsigned char _CLK_PIN, const unsigned char _SER_PIN, const unsigned char _INPUT_PINS[4]);
 	const unsigned char SER_PIN;
 	const unsigned char CLK_PIN;
-	unsigned char INPUT_PINS[8] = {0, 1, 2, 3, 9, 8, 7, 6};
+	unsigned char INPUT_PINS[4] = {0, 1, 2, 3};
 	unsigned short values[64];
 
 	void getData();

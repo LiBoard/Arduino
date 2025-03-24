@@ -15,10 +15,10 @@
 
 #include "LiBoard.h"
 
-LiBoard::LiBoard() : LiBoard(16, 10, nullptr) {}
+LiBoard::LiBoard() : LiBoard(3, 2, nullptr) {}
 
 LiBoard::LiBoard(const unsigned char _CLK_PIN, const unsigned char _SER_PIN,
-	const unsigned char _INPUT_PINS[8]) :
+	const unsigned char _INPUT_PINS[4]) :
 	CLK_PIN(_CLK_PIN), SER_PIN(_SER_PIN) {
 	if (_INPUT_PINS)
 		memcpy(INPUT_PINS, _INPUT_PINS, sizeof(INPUT_PINS));
@@ -31,7 +31,7 @@ void LiBoard::initializeBoard() {
 	digitalWrite(CLK_PIN, LOW);
 	digitalWrite(SER_PIN, LOW);
 
-	for (unsigned char i = 0; i < 8; ++i)
+	for (unsigned char i = 0; i < 16; ++i)
 		clockPulse();
 
 	clockPulse(HIGH);
@@ -48,11 +48,11 @@ void LiBoard::clockPulse(bool data) {
 }
 
 void LiBoard::getData() {
-	for (unsigned char file = 0; file < 8; ++file) {
-		clockPulse(file == 7);
+	for (unsigned char file = 0; file < 16; ++file) {
+		clockPulse(file == 15);
 		//IMPORTANT as it gives the shift register time to update
 		delayMicroseconds(200);
-		for (unsigned char rank = 0; rank < 8; ++rank) {
+		for (unsigned char rank = 0; rank < 4; ++rank) {
 				values[getIndex(file, rank)] = analogRead(INPUT_PINS[rank]);
 		}
 	}
@@ -60,7 +60,14 @@ void LiBoard::getData() {
 
 unsigned char LiBoard::getIndex(unsigned char file, unsigned char rank) {
     //Little-endian Rank-File Mapping
-    return (rank * 8) + file;
+
+    if (file < 8) {
+      //Right half
+      return file * 8 + (7 - rank);
+    }
+    
+    //Left half
+    return (file - 8) * 8 + rank;
 }
 
 unsigned long long LiBoard::getBinaryBoard(unsigned short threshold) {
