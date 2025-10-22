@@ -71,6 +71,14 @@ unsigned long long LiBoard::getBinaryBoard(unsigned short threshold) {
 	return binBoard;
 }
 
+unsigned long long LiBoard::getBinaryBoard(unsigned short *thresholds) {
+	getData();
+	unsigned long long binBoard = 0;
+	for (unsigned char i = 0; i<64; ++i)
+		binBoard |= (((unsigned long long) (values[i]<=thresholds[i])) << i);
+	return binBoard;
+}
+
 bool LiBoard::getSquareOccupancy(unsigned char file, unsigned char rank, long long binaryBoard) {
 	return (bool)((binaryBoard>>getIndex(file, rank))&1);
 }

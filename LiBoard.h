@@ -30,6 +30,7 @@ public:
 	void getData();
 	unsigned char getIndex(unsigned char file, unsigned char rank);
 	unsigned long long getBinaryBoard(unsigned short threshold);
+	unsigned long long getBinaryBoard(unsigned short *thresholds);
 	bool getSquareOccupancy(unsigned char file, unsigned char rank, long long binaryBoard);
 private:
 	void clockPulse();
